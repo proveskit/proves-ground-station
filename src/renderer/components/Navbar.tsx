@@ -8,6 +8,7 @@ import {
 const LINKS: { name: string; href: string }[] = [
   { name: 'Logs', href: '/' },
   { name: 'Commands', href: '/commands' },
+  { name: 'Files', href: '/files' },
   { name: 'Settings', href: '/settings' },
 ];
 
@@ -18,10 +19,11 @@ export default function Navbar() {
   const [activeDevice, setActiveDevice] = useState<string>('');
 
   useEffect(() => {
+    // run calls to get initial data
     window.electron.ipcRenderer.sendMessage('get-usb-devices');
     window.electron.ipcRenderer.sendMessage('check-connected');
 
-    window.electron.ipcRenderer.once('send-usb-devices', (data: string) => {
+    window.electron.ipcRenderer.once('get-usb-devices', (data: string) => {
       const d = data.split('\n').filter((d) => d !== '');
       setUsbDevices(d);
       setActiveDevice(d[0]);

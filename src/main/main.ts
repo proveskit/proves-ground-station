@@ -39,7 +39,7 @@ ipcMain.on('get-usb-devices', async (event) => {
       console.error(error);
       return;
     }
-    mainWindow?.webContents.send('send-usb-devices', stdout);
+    mainWindow?.webContents.send('get-usb-devices', stdout);
   });
 });
 

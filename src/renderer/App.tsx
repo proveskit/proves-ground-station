@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Commands from './routes/Commands';
 import Settings from './routes/Settings';
 import { ConnectionContextProvider } from './context/ConnectionContext';
+import Files from './routes/Files';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
           <Route element={<Navbar />}>
             <Route index path="/" element={<Home />} />
             <Route path="/commands" element={<Commands />} />
+            <Route path="/files" element={<Files />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>

@@ -99,7 +99,7 @@ function FormattedLog({ log }: { log: Log }) {
   const LogIcon = LOG_ICONS[log.level];
   return (
     <div
-      className={`w-full h-14 ${BG_COLORS[log.level]} justify-between rounded-md shadow-md flex gap-2 items-center px-4`}
+      className={`w-full min-h-14 ${BG_COLORS[log.level]} justify-between rounded-md shadow-md flex gap-2 items-center px-4`}
     >
       <div className="flex items-center gap-2">
         <LogIcon size={24} />

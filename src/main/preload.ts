@@ -11,8 +11,7 @@ export type Channels =
   | 'send-command'
   | 'enter-repl'
   | 'exit-repl'
-  | 'get-usb-devices'
-  | 'send-usb-devices';
+  | 'get-usb-devices';
 
 const electronHandler = {
   ipcRenderer: {
@@ -28,7 +27,7 @@ const electronHandler = {
         ipcRenderer.removeListener(channel, subscription);
       };
     },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
+    once(channel: Channels, func: (...args: any[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
