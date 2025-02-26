@@ -17,6 +17,7 @@
     --color-neutral-200: oklch(0.922 0 0);
     --color-neutral-400: oklch(0.708 0 0);
     --color-neutral-600: oklch(0.439 0 0);
+    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-sm: 0.875rem;
@@ -300,6 +301,9 @@
   .bg-red-600 {
     background-color: var(--color-red-600);
   }
+  .bg-white {
+    background-color: var(--color-white);
+  }
   .bg-yellow-200 {
     background-color: var(--color-yellow-200);
   }
@@ -332,6 +336,9 @@
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
+  }
+  .text-black {
+    color: var(--color-black);
   }
   .text-neutral-600 {
     color: var(--color-neutral-600);

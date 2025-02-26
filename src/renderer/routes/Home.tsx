@@ -5,10 +5,6 @@ import { MdError, MdErrorOutline } from 'react-icons/md';
 import { z } from 'zod';
 
 export default function Home() {
-  const [connected, setConnected] = useState<boolean>(false);
-  const [usbDevices, setUsbDevices] = useState<string[]>([]);
-  const [activeDevice, setActiveDevice] = useState<string>('');
-
   const [msgs, setMsgs] = useState<string[]>([]);
   const [cmdInput, setCmdInput] = useState('');
 
@@ -16,61 +12,12 @@ export default function Home() {
     window.electron.ipcRenderer.on('terminal-data', (data) => {
       setMsgs((prev) => [data as string, ...prev]);
     });
-
-    window.electron.ipcRenderer.sendMessage('get-usb-devices');
-    window.electron.ipcRenderer.sendMessage('check-connected');
-
-    window.electron.ipcRenderer.once('send-usb-devices', (data: string) => {
-      const d = data.split('\n').filter((d) => d !== '');
-      setUsbDevices(d);
-      setActiveDevice(d[0]);
-    });
-
-    window.electron.ipcRenderer.once('check-connected', (data: boolean) => {
-      setConnected(data);
-    });
   }, []);
 
   return (
     <div className="w-screen p-4">
-      <div className="flex items-center justify-between">
-        <p className="font-bold text-2xl mb-3">Satellite Controller</p>
-        <div className="flex gap-3 items-center">
-          <select
-            value={activeDevice}
-            className="border-2 h-8 rounded-sm border-neutral-400"
-          >
-            {usbDevices.map((device, idx) => (
-              <option onClick={() => setActiveDevice(device)} key={idx}>
-                {device}
-              </option>
-            ))}
-          </select>
-          {!connected ? (
-            <button
-              className="bg-blue-600 text-white px-3 py-2 rounded-md hover:cursor-pointer"
-              onClick={() => {
-                window.electron.ipcRenderer.sendMessage(
-                  'connect-device',
-                  activeDevice,
-                );
-                setConnected(true);
-              }}
-            >
-              Connect
-            </button>
-          ) : (
-            <button
-              className="bg-red-500 text-white px-3 py-2 rounded-md hover:cursor-pointer"
-              onClick={() => {
-                window.electron.ipcRenderer.sendMessage('disconnect-device');
-                setConnected(false);
-              }}
-            >
-              Disconnect
-            </button>
-          )}
-        </div>
+      <div className="flex items-center">
+        <p className="font-bold text-2xl mb-3">Logging</p>
       </div>
       <div className="w-full gap-3 h-200 overflow-scroll bg-neutral-100 flex flex-col-reverse rounded-md shadow-sm p-2">
         {msgs.map((msg, idx) => {

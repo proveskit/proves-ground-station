@@ -75,16 +75,18 @@ class SerialManager {
     });
 
     // add event listeners to listener array
-    this.listeners.push(
-      ipcMain.on('send-command', (_, msg) => this.sendMessage(msg)),
-    );
-    this.listeners.push(ipcMain.on('enter-repl', () => this.enterRepl()));
-    this.listeners.push(ipcMain.on('exit-repl', () => this.exitRepl()));
-    this.listeners.push(
-      ipcMain.on('check-connected', () => {
-        mainWindow?.webContents.send('check-connected', this.connected);
-      }),
-    );
+    this.listeners.push('send-command');
+    this.listeners.push('enter-repl');
+    this.listeners.push('exit-repl');
+    this.listeners.push('check-connected');
+
+    // register listeners
+    ipcMain.on('send-command', (_, msg) => this.sendMessage(msg));
+    ipcMain.on('enter-repl', () => this.enterRepl());
+    ipcMain.on('exit-repl', () => this.exitRepl());
+    ipcMain.on('check-connected', () => {
+      mainWindow?.webContents.send('check-connected', this.connected);
+    });
   }
 
   disconnect() {
@@ -96,7 +98,7 @@ class SerialManager {
     this.connected = false;
 
     for (const l of this.listeners) {
-      l.removeListener();
+      ipcMain.removeAllListeners(l);
     }
 
     this.listeners = [];
